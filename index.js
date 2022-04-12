@@ -8,6 +8,8 @@ const { createServer } = require("http");
 const { auth, requiresAuth } = require("express-openid-connect");
 const axios = require("axios").default;
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+
 const {
   checkUrl,
   APP_URL, // Public URL for this app
@@ -92,6 +94,11 @@ app.get("/user", requiresAuth(), async (req, res) => {
      next(err);
    }
  });
+
+ app.post("/events", async (req, res) => {
+   console.log(req.body);
+   res.send();
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
